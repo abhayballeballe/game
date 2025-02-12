@@ -18,6 +18,7 @@
             position: relative;
             overflow: hidden;
             background-color: #ffcccb;
+            display: none; /* Initially hidden */
         }
         #teddy {
             width: 50px;
@@ -25,12 +26,11 @@
             position: absolute;
             bottom: 0;
             left: 50px;
-            background-image: url('images/teddy.jpg'); /* Adjust the path */
-
+            background-image: url('teddy.jpg'); /* Fixed teddy image */
             background-size: cover;
         }
         .obstacle {
-            width: 30px; /* Decreased obstacle width */
+            width: 30px;
             height: 40px;
             position: absolute;
             bottom: 0;
@@ -58,16 +58,23 @@
             border: none;
             cursor: pointer;
         }
+        #start {
+            font-size: 30px;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <h1>Never ending as my love is eternal for u</h1>
     <p>Press SPACE to jump over Nazar. Collect hearts for points. Survive as long as possible!</p>
+    <button id="start" onclick="startGame()">❤️</button>
     <div id="game">
         <div id="teddy"></div>
     </div>
     <p id="score">Love Score: 0 ❤️</p>
-    <p id="distance">Distance: 0m</p>
+    <p id="distance">Distance: 0m ❤️</p>
     <p id="motivation"></p>
     <p id="message"></p>
     <button id="restart" onclick="restartGame()">Restart</button>
@@ -82,8 +89,16 @@
         let motivation = document.getElementById("motivation");
         let restartBtn = document.getElementById("restart");
         let continueText = document.getElementById("continueText");
+        let startBtn = document.getElementById("start");
         let jumping = false, score = 0, distance = 0;
         let gameOver = false;
+
+        function startGame() {
+            game.style.display = "block";
+            startBtn.style.display = "none";
+            updateDistance();
+            setTimeout(createObstacle, 5000); // Delay obstacles for first 5m
+        }
 
         function jump() {
             if (jumping || gameOver) return;
@@ -152,8 +167,6 @@
         }
 
         document.addEventListener("keydown", function (e) { if (e.code === "Space") jump(); });
-        setTimeout(createObstacle, 5000); // Delay obstacles for first 5m
-        updateDistance();
     </script>
 </body>
 </html>
